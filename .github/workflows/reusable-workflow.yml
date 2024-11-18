@@ -4,6 +4,7 @@ on:
   workflow_call:
     inputs:
       build-cmd:
+        description: ビルドコマンド
         required: true
         type: string
 
