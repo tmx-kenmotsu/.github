@@ -7,7 +7,7 @@ on:
         description: ビルドコマンド
         required: true
         type: string
-      unittest-cmd
+      unittest-cmd:
         description: 単体テストコマンド
         required: true
         type: string
