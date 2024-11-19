@@ -1,8 +1,0 @@
-{
-    "name": "CI Sample",
-    "description": "CI Sample workflow template.",
-    "iconName": "octicon smiley",
-    "categories": [
-        "Java"
-    ]
-}

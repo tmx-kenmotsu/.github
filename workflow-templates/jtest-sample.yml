@@ -1,4 +1,4 @@
-name: CI
+name: Jtest Sample
 
 on:
   push:
