@@ -7,6 +7,10 @@ on:
         description: ビルドコマンド
         required: true
         type: string
+      unittest-cmd
+        description: 単体テストコマンド
+        required: true
+        type: string
 
 jobs:
   build:
@@ -25,7 +29,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build artifacts
-        path: target/*.jar
+        path: **/*.jar
 
   static-analysis:
     name: Static analysis
@@ -36,30 +40,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       
-    - name: Create input for Jtest
-      run: mvn package jtest:jtest -DskipTests=true "-Djtest.skip=true"
-      
-    - name: Run Jtest
-      id: jtest
-      uses: parasoft/run-jtest-action@2.0.0
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
       with:
-        testConfig: builtin://Recommended Rules
-        reportDir: reports/sa
-        installDir: C:/parasoft/jtest_2024.1
-        input: target/jtest/jtest.data.json
+        languages: java-kotlin
+        build-mode: none
         
-    - name: Upload results (SARIF)
-      if: always()
-      uses: github/codeql-action/upload-sarif@v3
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
       with:
-        sarif_file: reports/sa/report.sarif
-        
-    - name: Archive reports
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: static analysis reports
-        path: reports/sa/*.*
+        category: /language:java-kotlin
 
   unit-test:
     name: Unit test
@@ -70,18 +60,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       
-    - name: Run Jtest
-      run: mvn jtest:agent test jtest:jtest "-Djtest.config=builtin://Unit Tests" "-Djtest.report=reports/ut"
+    - name: Run JUnit with Maven
+      run: ${{ inputs.unittest-cmd }}
         
     - name: Upload results (JUnit)
       if: always()
       uses: mikepenz/action-junit-report@v5
       with:
-        report_paths: target/surefire-reports/TEST-*.xml
-        
-    - name: Archive reports
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: unit test reports
-        path: reports/ut/*.*
+        report_paths: **/TEST-*.xml
