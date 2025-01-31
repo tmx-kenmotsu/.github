@@ -38,8 +38,6 @@ jobs:
   static-analysis:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      checks: write
     steps:
     - uses: actions/checkout@v4.2.2
     - name: Static Analysis with SpotBugs
@@ -57,8 +55,6 @@ jobs:
   unit-test:
     needs: static-analysis
     runs-on: ubuntu-latest
-    permissions:
-      checks: write
     steps:
     - uses: actions/checkout@v4.2.2
     - name: Unit Test with JUnit
