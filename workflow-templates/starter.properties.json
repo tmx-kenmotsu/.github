@@ -1,0 +1,8 @@
+{
+    "name": "Starter",
+    "description": "プロジェクト共通のワークフローです。",
+    "iconName": "octicon smiley",
+    "categories": [
+        "Java"
+    ]
+}

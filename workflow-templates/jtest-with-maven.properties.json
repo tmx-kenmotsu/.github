@@ -1,0 +1,8 @@
+{
+    "name": "Jtest with Maven",
+    "description": "Jtestを使用してJavaプロジェクトを静的解析します。",
+    "iconName": "octicon smiley",
+    "categories": [
+        "Java"
+    ]
+}
