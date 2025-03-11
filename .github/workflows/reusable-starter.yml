@@ -54,13 +54,6 @@ jobs:
       with:
         name: build-artifacts
         path: ${{ inputs.buildArtifacts }}
-    # - name: Send Teams Message
-    #   if: always()
-    #   uses: tlolkema/simple-teams-message@1.1.0
-    #   with:
-    #     message_title: "title"
-    #     message_description: "description"
-    #     webhook: ${{ secrets.TEAMS_WEBHOOK }}
 
   static-analysis:
     needs: build
